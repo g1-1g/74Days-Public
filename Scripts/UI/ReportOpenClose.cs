@@ -1,11 +1,9 @@
 using UnityEngine;
-using DG.Tweening;
-using Unity.VisualScripting;
 
-public class BoxOpenClose : MonoBehaviour
+public class ReportOpenClose : MonoBehaviour
 {
     [SerializeField]
-    private InventoryUpDown _inventoryUI;
+    private DailyReportUpDown _reportUI;
 
     private bool _isInside = false;
 
@@ -14,7 +12,7 @@ public class BoxOpenClose : MonoBehaviour
         if (_isInside)
         {
             if (Input.GetKeyDown(KeyCode.Space))
-                _inventoryUI.Open();
+                _reportUI.Open();
         }
     }
 
