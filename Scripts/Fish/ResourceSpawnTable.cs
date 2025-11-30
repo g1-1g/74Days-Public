@@ -11,19 +11,19 @@ public enum EOceanDepthZone
 [System.Serializable]
 public class Entry
 {
-    public GameObject fishPrefab;
+    public GameObject resourcePrefab;
     public float weight = 1f;
 }
 
-[CreateAssetMenu(menuName = "Fish/Fish Spawn Table")]
-public class FishSpawnTable : ScriptableObject
+[CreateAssetMenu(menuName = "Resource/Resource Spawn Table")]
+public class ResourceSpawnTable : ScriptableObject
 {
     public EOceanDepthZone depthZone;
     
     public List<Entry> entries = new();
 
     /// <summary>
-    /// 가중치 기반 랜덤으로 물고기 프리팹 하나 반환
+    /// 가중치 기반 랜덤으로 리소스 프리팹 하나 반환
     /// </summary>
     public GameObject GetRandomFishPrefab()
     {
@@ -35,17 +35,17 @@ public class FishSpawnTable : ScriptableObject
             total += Mathf.Max(e.weight, 0f);
 
         if (total <= 0f)
-            return entries[0].fishPrefab;
+            return entries[0].resourcePrefab;
 
         float r = Random.value * total;
         foreach (var e in entries)
         {
             float w = Mathf.Max(e.weight, 0f);
             if (r <= w)
-                return e.fishPrefab;
+                return e.resourcePrefab;
             r -= w;
         }
 
-        return entries[0].fishPrefab;
+        return entries[0].resourcePrefab;
     }
 }
