@@ -1,6 +1,6 @@
-# 🚢 74Days
+# 🚢 7Days
 
-> 74일간의 표류, 생존을 위한 잠수 – 2D 해상 서바이벌 게임
+> 7일간의 표류, 생존을 위한 잠수 – 2D 해상 서바이벌 게임
 <img width="1562" height="871" alt="화면 캡처 2025-12-08 161925" src="https://github.com/user-attachments/assets/ee2ef77d-fb7d-4c46-a67f-a988e64f1d61" />
 
 ## 📋 프로젝트 개요
