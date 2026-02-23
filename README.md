@@ -57,8 +57,8 @@
 🛠️ 기술 스택
 Engine & Language
 
-Unity 3D
-C#
+- Unity 2D
+- C#
 
 Note: 본 레포지토리는 소스 코드만 포함하고 있습니다.
 
