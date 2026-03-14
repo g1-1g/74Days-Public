@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 
-
 public class CameraZoom : MonoBehaviour
 {
     [SerializeField] private HarpoonShooter _shooter;
@@ -14,54 +13,48 @@ public class CameraZoom : MonoBehaviour
     [SerializeField] private float _zoomTime = 0.25f;
     [SerializeField] private Ease _zoomEase = Ease.OutQuad;
 
-    private PixelPerfectCamera _pixelPerfectCamera;
-    private int _baseAssetsPPU;
-    private int _currentTargetPPU;
+    private CinemachineCamera _cinemachine;
+    private float _baseOrthographicSize;
+    private float _currentTargetOrthographicSize;
     private Tweener _zoomTween;
 
     private void Awake()
     {
-        // PixelPerfectCamera는 MainCamera에 붙어있으므로 Camera.main에서 가져옴
-        _pixelPerfectCamera = Camera.main?.GetComponent<PixelPerfectCamera>();
+        _cinemachine = GetComponent<CinemachineCamera>();
 
-        if (_pixelPerfectCamera == null)
-        {
-            Debug.LogError("[CameraZoom] PixelPerfectCamera를 찾을 수 없습니다. MainCamera에 PixelPerfectCamera가 있는지 확인하세요.");
-            enabled = false;
-            return;
-        }
-
-        _baseAssetsPPU = _pixelPerfectCamera.assetsPPU;
-        _currentTargetPPU = _baseAssetsPPU;
+        _baseOrthographicSize = _cinemachine.Lens.OrthographicSize;
+        _currentTargetOrthographicSize = _baseOrthographicSize;
     }
 
     private void Update()
     {
-        if (_shooter == null || _pixelPerfectCamera == null)
+        if (_shooter == null || _cinemachine == null)
             return;
 
         bool zoomActive = _shooter.IsAiming;
 
-        // assetsPPU를 조정하여 픽셀 퍼펙트 유지하면서 줌
-        // 줌인: PPU 증가 (더 많은 픽셀을 보여줌)
-        // 예: zoomFactor=0.65 → targetPPU = 16/0.65 ≈ 24.6
-        int targetPPU = zoomActive
-            ? Mathf.RoundToInt(_baseAssetsPPU / _zoomFactor)
-            : _baseAssetsPPU;
+        float targetOrthographicSize = zoomActive
+            ? _baseOrthographicSize * _zoomFactor
+            : _baseOrthographicSize;
 
-        if (targetPPU == _currentTargetPPU)
+        if (targetOrthographicSize == _currentTargetOrthographicSize)
             return;
 
-        _currentTargetPPU = targetPPU;
+        _currentTargetOrthographicSize = targetOrthographicSize;
 
         // 이전 트윈 정리
         _zoomTween?.Kill();
 
-        // DOTween으로 assetsPPU 트윈 (부드러운 줌 효과)
+        // DOTween으로 OrthographicSize 트윈 (부드러운 줌 효과)
         _zoomTween = DOTween.To(
-                () => _pixelPerfectCamera.assetsPPU,
-                value => _pixelPerfectCamera.assetsPPU = value,
-                targetPPU,
+                () => _cinemachine.Lens.OrthographicSize,
+                value =>
+                {
+                    var lens = _cinemachine.Lens;
+                    lens.OrthographicSize = value;
+                    _cinemachine.Lens = lens;
+                },
+                targetOrthographicSize,
                 _zoomTime
             )
             .SetEase(_zoomEase)
