@@ -25,8 +25,8 @@ public class Warning : MonoBehaviour
 
     private void Start()
     {
-        TweenMake();
-        ScaleChange();
+        StartWarningBlinkTween();
+        StartWarningScaleTween();
     }
 
     void Update()
@@ -49,7 +49,7 @@ public class Warning : MonoBehaviour
         _o2TargetAlpha = Mathf.Lerp(_maxO2Alpha, _minO2Alpha, o2Ratio);
     }
 
-    private void TweenMake()
+    private void StartWarningBlinkTween()
     {
         // blinkValue를 0 ↔ 1 사이에서 계속 반복시키는 Tween (딱 한 번 만들기)
         DOTween.To(() => _blinkValue, x => _blinkValue = x, 1f, _blinkTime)
@@ -57,7 +57,7 @@ public class Warning : MonoBehaviour
             .SetEase(Ease.OutCubic);
     }
 
-    private void ScaleChange()
+    private void StartWarningScaleTween()
     {
         _warningHPImage.gameObject.GetComponent<RectTransform>().DOScale(new Vector3(1.5f, 1.5f, 0f), _blinkTime)
             .SetLoops(-1, LoopType.Yoyo)

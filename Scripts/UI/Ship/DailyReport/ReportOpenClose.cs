@@ -8,7 +8,7 @@ using UnityEngine;
 public class ReportOpenClose : MonoBehaviour
 {
     [SerializeField]
-    private DailyReportUpDown _reportUI;
+    private DailyReportPopupController _reportUI;
     [SerializeField]
     private AudioClip _reportAudioClip;
 

@@ -3,7 +3,7 @@ using UnityEngine;
 public class DistributionUIOpenClose : MonoBehaviour
 {
     [SerializeField]
-    private UIBasicOpenClose _divisionUI;
+    private UIPopupController _divisionUI;
     [SerializeField]
     private AudioClip _clip;
 

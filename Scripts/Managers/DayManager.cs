@@ -212,8 +212,8 @@ using System.Collections.Generic;
               SceneTransitionManager.Instance.ApplyPendingResources();
           }
 
-          // UI로 자원 분배 화면 표시 (ResourceDistributionUI.OnPhaseChanged에서 자동)
-          // 완료 버튼 클릭 시 ResourceDistributionUI에서 CompleteEvening() 호출
+          // UI로 자원 분배 화면 표시 (ResourceDistributionView.OnPhaseChanged에서 자동)
+          // 완료 버튼 클릭 시 ResourceDistributionView에서 CompleteEvening() 호출
       }
 
       private void HandleGameEnd()
@@ -276,7 +276,7 @@ using System.Collections.Generic;
 
       /// <summary>
       /// Evening 완료 처리 (자원 분배 → 노화 → 다음 날 전환)
-      /// ResourceDistributionUI에서 호출
+      /// ResourceDistributionView에서 호출
       /// </summary>
       public void CompleteEvening()
       {
@@ -299,16 +299,16 @@ using System.Collections.Generic;
       {
           Debug.Log("[DayManager] 자원 분배 적용 시작");
 
-          if (ResourceDistributionUI.Instance == null)
+          if (ResourceDistributionView.Instance == null)
           {
-              Debug.LogWarning("[DayManager] ResourceDistributionUI.Instance가 null입니다!");
+              Debug.LogWarning("[DayManager] ResourceDistributionView.Instance가 null입니다!");
               return;
           }
 
           int totalResourcesApplied = 0;
 
-          // ResourceDistributionUI에서 모든 CrewResourceItem 가져오기
-          var crewItems = ResourceDistributionUI.Instance.GetComponentsInChildren<CrewResourceItem>();
+          // ResourceDistributionView에서 모든 CrewResourceItem 가져오기
+          var crewItems = ResourceDistributionView.Instance.GetComponentsInChildren<CrewResourceItem>();
 
           foreach (var crewItem in crewItems)
           {

@@ -163,9 +163,9 @@ public class DivisionBoxSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         assignedResource = type;
 
         // 아이콘 표시
-        if (iconImage != null && ResourceDistributionUI.Instance != null)
+        if (iconImage != null && ResourceDistributionView.Instance != null)
         {
-            iconImage.sprite = ResourceDistributionUI.Instance.GetResourceIcon(type);
+            iconImage.sprite = ResourceDistributionView.Instance.GetResourceIcon(type);
             iconImage.enabled = true;
             iconImage.color = Color.white;
         }
@@ -202,10 +202,10 @@ public class DivisionBoxSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
     /// </summary>
     private void NotifyInventoryReservation(ResourceType type, bool isReserve)
     {
-        if (ResourceDistributionUI.Instance == null)
+        if (ResourceDistributionView.Instance == null)
             return;
 
-        var inventorySlot = ResourceDistributionUI.Instance.GetInventorySlot(type);
+        var inventorySlot = ResourceDistributionView.Instance.GetInventorySlot(type);
         if (inventorySlot != null)
         {
             if (isReserve)
